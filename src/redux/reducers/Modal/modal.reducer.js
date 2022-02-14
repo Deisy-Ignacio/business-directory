@@ -1,4 +1,4 @@
-import { SET_OPEN_MODAL, SET_TYPE_MODAL } from "../../types/Modal/modal.types";
+import { SET_OPEN_MODAL, SET_TYPE_MODAL } from "../../types/modal/modal.types";
 
 const initialState = {
   typeModal: "",

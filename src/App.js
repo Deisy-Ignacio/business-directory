@@ -1,5 +1,5 @@
 import Business from "components/Business/Business";
-import BusinessTeam from "components/Business/BusinessTeam";
+import BusinessTeam from "components/BusinessTeam/BusinessTeam";
 import Layout from "components/Common/Layout/Layout";
 import { useSelector } from "react-redux";
 import { BUSINESS_VIEWS } from "utils/data";

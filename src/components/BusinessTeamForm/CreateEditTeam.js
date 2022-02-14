@@ -9,7 +9,7 @@ import {
   addNewPerson,
   editCurrentBusinessPerson,
 } from "redux/actions/businessPerson.actions";
-import { setOpenModal } from "redux/actions/Modal/modal.actions";
+import { setOpenModal } from "redux/actions/modal/modal.actions";
 
 export const CreateEditTeam = ({ businessId, cancel }) => {
   const dispatch = useDispatch();

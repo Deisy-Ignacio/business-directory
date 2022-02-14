@@ -1,6 +1,5 @@
 import Button from "components/Common/Button/Button";
 import Label from "components/Common/Label/Label";
-import Title from "components/Common/Title/Title";
 import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -9,16 +8,17 @@ import {
   getBusinessTeam,
   setCurrentBusinessPerson,
 } from "../../redux/actions/businessPerson.actions";
-import * as S from "./Business.styled";
-
+import * as S from "../Business/Business.styled";
 import { ReactComponent as OverviewIcon } from "assets/svgs/overview.svg";
-import { ReactComponent as EditIcon } from "assets/svgs/edit.svg";
-import { ReactComponent as DeleteIcon } from "assets/svgs/delete.svg";
+import { ReactComponent as ListIcon } from "assets/svgs/list.svg";
 import Modal from "components/Common/Modal/Modal";
 import { MODAL_TYPES } from "utils/data";
 import { CreateEditTeam } from "components/BusinessTeamForm/CreateEditTeam";
 import Delete from "components/BusinessForm/Delete";
-import { setOpenModal, setTypeModal } from "redux/actions/Modal/modal.actions";
+import { setOpenModal, setTypeModal } from "redux/actions/modal/modal.actions";
+import { setOverview } from "redux/actions/views/views.actions";
+import BusinessItemPerson from "./BusinessItemPerson";
+import BusinessCardPerson from "./BusinessCardPerson";
 
 export default function BusinessTeam() {
   const dispatch = useDispatch();
@@ -27,6 +27,8 @@ export default function BusinessTeam() {
     (state) => state.businessPerson
   );
   const { typeModal, openModal } = useSelector((state) => state.modal);
+  const { overview } = useSelector((state) => state.views);
+  const ICON_VIEW = overview ? <ListIcon /> : <OverviewIcon />;
 
   const handleModal = useCallback(
     (type, id) => () => {
@@ -75,6 +77,10 @@ export default function BusinessTeam() {
     }
   };
 
+  const onChangeView = () => {
+    dispatch(setOverview(!overview));
+  };
+
   useEffect(() => {
     dispatch(getBusinessTeam(currentBusiness.businessId));
   }, [dispatch, currentBusiness]);
@@ -84,27 +90,34 @@ export default function BusinessTeam() {
       <S.Wrapper>
         <Label type={"title"}>Business Name</Label>
         <S.Actions>
-          <OverviewIcon />
+          <S.IconView onClick={onChangeView}>{ICON_VIEW}</S.IconView>
           <Button size={"medium"} onClick={handleModal(MODAL_TYPES.CREATE)}>
             Create Person
           </Button>
         </S.Actions>
       </S.Wrapper>
-      <S.Content>
-        {businessTeam.map((item) => (
-          <S.BusinessItemPerson key={item.personId}>
-            <Title>{item.name}</Title>
-            <Title variant="secondary">{item.role}</Title>
-            <S.Icons>
-              <EditIcon
-                onClick={handleModal(MODAL_TYPES.EDIT, item.personId)}
-              />
-              <DeleteIcon
-                onClick={handleModal(MODAL_TYPES.DELETE, item.personId)}
-              />
-            </S.Icons>
-          </S.BusinessItemPerson>
-        ))}
+      <S.Content overview={overview}>
+        {businessTeam.map((item) =>
+          overview ? (
+            <BusinessCardPerson
+              key={`business-person_${item.personId}`}
+              personId={item.personId}
+              name={item.name}
+              role={item.role}
+              email={item.email}
+              phone={item.phone}
+              handleModal={handleModal}
+            />
+          ) : (
+            <BusinessItemPerson
+              key={`business-person_${item.personId}`}
+              personId={item.personId}
+              name={item.name}
+              role={item.role}
+              handleModal={handleModal}
+            />
+          )
+        )}
       </S.Content>
       {openModal && (
         <Modal open={openModal} close={handleCloseModal}>

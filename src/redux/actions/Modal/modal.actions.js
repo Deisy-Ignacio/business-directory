@@ -1,7 +1,4 @@
-import {
-  SET_OPEN_MODAL,
-  SET_TYPE_MODAL,
-} from "../../../redux/types/Modal/modal.types";
+import { SET_OPEN_MODAL, SET_TYPE_MODAL } from "../../types/modal/modal.types";
 
 export const setTypeModal = (type) => ({
   type: SET_TYPE_MODAL,

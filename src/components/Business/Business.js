@@ -17,7 +17,7 @@ import { MODAL_TYPES, BUSINESS_VIEWS } from "utils/data";
 import { ReactComponent as EditIcon } from "assets/svgs/edit.svg";
 import { ReactComponent as DeleteIcon } from "assets/svgs/delete.svg";
 import * as S from "./Business.styled";
-import { setOpenModal, setTypeModal } from "redux/actions/Modal/modal.actions";
+import { setOpenModal, setTypeModal } from "redux/actions/modal/modal.actions";
 
 const Business = () => {
   const dispatch = useDispatch();

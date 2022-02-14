@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const Container = styled.div``;
 
@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
 export const Actions = styled.div`
   display: flex;
   align-items: center;
-  & > svg {
+  & svg {
     margin-right: 2.7rem;
     cursor: pointer;
     path {
@@ -33,6 +33,14 @@ export const Icons = styled.div`
 
 export const Content = styled.div`
   margin: 1.6rem 0;
+
+  ${({ overview }) =>
+    overview &&
+    css`
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    `}
 `;
 
 export const BusinessItem = styled.div`
@@ -44,9 +52,4 @@ export const BusinessItem = styled.div`
   cursor: pointer;
 `;
 
-export const BusinessItemPerson = styled.div`
-  display: grid;
-  grid-template-columns: 40% auto auto;
-  padding: 2.6rem 0;
-  border-bottom: 1px solid #efeeee;
-`;
+export const IconView = styled.div``;

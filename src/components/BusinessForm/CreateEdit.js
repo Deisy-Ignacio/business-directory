@@ -4,7 +4,7 @@ import Label from "components/Common/Label/Label";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { setOpenModal } from "redux/actions/Modal/modal.actions";
+import { setOpenModal } from "redux/actions/modal/modal.actions";
 import {
   addNewBusiness,
   editCurrentBusiness,
