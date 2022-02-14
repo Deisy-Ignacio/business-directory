@@ -4,6 +4,7 @@ import Label from "components/Common/Label/Label";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { setOpenModal } from "redux/actions/Modal/modal.actions";
 import {
   addNewBusiness,
   editCurrentBusiness,
@@ -17,10 +18,12 @@ const CreateEdit = ({ cancel }) => {
 
   const editBusiness = () => {
     dispatch(editCurrentBusiness({ ...currentBusiness, name }));
+    dispatch(setOpenModal(false));
   };
 
   const createBusiness = () => {
     dispatch(addNewBusiness({ name }));
+    dispatch(setOpenModal(false));
   };
 
   const onChangeInput = ({ target }) => {

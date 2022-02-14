@@ -12,19 +12,17 @@ import {
   getBusiness,
   setBusinessView,
   setCurrentId,
-  setOpenModal,
-  setTypeModal,
 } from "../../redux/actions/business.actions";
 import { MODAL_TYPES, BUSINESS_VIEWS } from "utils/data";
 import { ReactComponent as EditIcon } from "assets/svgs/edit.svg";
 import { ReactComponent as DeleteIcon } from "assets/svgs/delete.svg";
 import * as S from "./Business.styled";
+import { setOpenModal, setTypeModal } from "redux/actions/Modal/modal.actions";
 
 const Business = () => {
   const dispatch = useDispatch();
-  const { business, typeModal, openModal, currentBusiness } = useSelector(
-    (state) => state.business
-  );
+  const { business, currentBusiness } = useSelector((state) => state.business);
+  const { typeModal, openModal } = useSelector((state) => state.modal);
 
   const handleModal = useCallback(
     (type, id) => (e) => {
@@ -53,6 +51,7 @@ const Business = () => {
   const handleDelete = useCallback(
     (id) => {
       dispatch(deleteCurrentBusiness(id));
+      dispatch(setOpenModal(false));
     },
     [dispatch]
   );

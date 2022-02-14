@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Input from "components/Common/Input/Input";
 import Label from "components/Common/Label/Label";
 import { INPUT_TYPES } from "utils/data";
 import Button from "components/Common/Button/Button";
 import * as S from "../BusinessForm/BusinessForm.styled";
-import { addNewPerson } from "redux/actions/businessPerson.actions";
+import {
+  addNewPerson,
+  editCurrentBusinessPerson,
+} from "redux/actions/businessPerson.actions";
+import { setOpenModal } from "redux/actions/Modal/modal.actions";
 
 export const CreateEditTeam = ({ businessId, cancel }) => {
   const dispatch = useDispatch();
@@ -18,7 +22,7 @@ export const CreateEditTeam = ({ businessId, cancel }) => {
     {
       title: "Email",
       value: "",
-      pattern: `[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$`,
+      pattern: `^[^\s@]+@[^\s@]+\.[^\s@]+$`,
     },
     {
       title: "Phone",
@@ -47,6 +51,8 @@ export const CreateEditTeam = ({ businessId, cancel }) => {
       email: email.value,
       join_date: join_date.value,
     };
+    if (currentBusinessPerson)
+      newPerson.personId = currentBusinessPerson.personId;
     return newPerson;
   };
 
@@ -69,14 +75,28 @@ export const CreateEditTeam = ({ businessId, cancel }) => {
 
   const createPerson = () => {
     const newPerson = getClearPerson();
-    console.log(newPerson);
-
     dispatch(addNewPerson(businessId, newPerson));
+    dispatch(setOpenModal(false));
   };
 
   const editPerson = () => {
-    //dispatch(editCurrentBusines({ ...currentBusiness, name }));
+    const newPerson = getClearPerson();
+    dispatch(editCurrentBusinessPerson(businessId, newPerson));
+    dispatch(setOpenModal(false));
   };
+
+  useEffect(() => {
+    if (currentBusinessPerson != null) {
+      let copyPerson = [...person];
+      copyPerson[0].value = currentBusinessPerson.name;
+      copyPerson[1].value = currentBusinessPerson.role;
+      copyPerson[2].value = currentBusinessPerson.email;
+      copyPerson[3].value = currentBusinessPerson.phone;
+      copyPerson[4].value = currentBusinessPerson.join_date;
+      setPerson(copyPerson);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentBusinessPerson]);
 
   return (
     <>

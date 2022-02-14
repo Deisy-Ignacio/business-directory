@@ -21,6 +21,7 @@ export const Actions = styled.div`
 `;
 
 export const Icons = styled.div`
+  text-align: end;
   & svg {
     cursor: pointer;
   }
@@ -41,4 +42,11 @@ export const BusinessItem = styled.div`
   padding: 2.6rem 0;
   border-bottom: 1px solid #efeeee;
   cursor: pointer;
+`;
+
+export const BusinessItemPerson = styled.div`
+  display: grid;
+  grid-template-columns: 40% auto auto;
+  padding: 2.6rem 0;
+  border-bottom: 1px solid #efeeee;
 `;

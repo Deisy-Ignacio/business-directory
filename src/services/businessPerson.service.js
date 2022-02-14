@@ -15,6 +15,15 @@ export const createBusinessPerson = async (businessId, businessPerson) => {
   return data;
 };
 
+export const editBusinessPerson = async (businessId, businessPerson) => {
+  const { data } = await axios.put(
+    `${businessUrl}/${businessId}/persons/${businessPerson.personId}`,
+    businessPerson
+  );
+  console.log(data);
+  return data;
+};
+
 export const deleteBusinessPerson = async (businessId, businessPersonId) => {
   const { data } = await axios.delete(
     `${businessUrl}/${businessId}/persons/${businessPersonId}`

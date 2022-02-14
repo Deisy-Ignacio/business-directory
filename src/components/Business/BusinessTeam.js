@@ -4,10 +4,7 @@ import Title from "components/Common/Title/Title";
 import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setOpenModal,
-  setTypeModal,
-} from "../../redux/actions/business.actions";
-import {
+  clearCurrentBusinessPerson,
   deleteCurrentBusinessPerson,
   getBusinessTeam,
   setCurrentBusinessPerson,
@@ -21,15 +18,15 @@ import Modal from "components/Common/Modal/Modal";
 import { MODAL_TYPES } from "utils/data";
 import { CreateEditTeam } from "components/BusinessTeamForm/CreateEditTeam";
 import Delete from "components/BusinessForm/Delete";
+import { setOpenModal, setTypeModal } from "redux/actions/Modal/modal.actions";
 
 export default function BusinessTeam() {
   const dispatch = useDispatch();
-  const { currentBusiness, openModal, typeModal } = useSelector(
-    (state) => state.business
-  );
+  const { currentBusiness } = useSelector((state) => state.business);
   const { businessTeam, currentBusinessPerson } = useSelector(
     (state) => state.businessPerson
   );
+  const { typeModal, openModal } = useSelector((state) => state.modal);
 
   const handleModal = useCallback(
     (type, id) => () => {
@@ -42,11 +39,13 @@ export default function BusinessTeam() {
 
   const handleCloseModal = useCallback(() => {
     dispatch(setOpenModal(false));
+    dispatch(clearCurrentBusinessPerson());
   }, [dispatch]);
 
   const handleDelete = useCallback(
     (id) => {
       dispatch(deleteCurrentBusinessPerson(currentBusiness.businessId, id));
+      dispatch(setOpenModal(false));
     },
     [dispatch, currentBusiness]
   );
@@ -80,8 +79,6 @@ export default function BusinessTeam() {
     dispatch(getBusinessTeam(currentBusiness.businessId));
   }, [dispatch, currentBusiness]);
 
-  console.log({ businessTeam });
-
   return (
     <S.Container>
       <S.Wrapper>
@@ -95,18 +92,18 @@ export default function BusinessTeam() {
       </S.Wrapper>
       <S.Content>
         {businessTeam.map((item) => (
-          <S.BusinessItem key={item.personId}>
+          <S.BusinessItemPerson key={item.personId}>
             <Title>{item.name}</Title>
             <Title variant="secondary">{item.role}</Title>
             <S.Icons>
               <EditIcon
-              // onClick={handleModal(MODAL_TYPES.EDIT, item.businessId)}
+                onClick={handleModal(MODAL_TYPES.EDIT, item.personId)}
               />
               <DeleteIcon
                 onClick={handleModal(MODAL_TYPES.DELETE, item.personId)}
               />
             </S.Icons>
-          </S.BusinessItem>
+          </S.BusinessItemPerson>
         ))}
       </S.Content>
       {openModal && (

@@ -6,7 +6,7 @@ import { INPUT_TYPES } from "utils/data";
 const Input = ({ title, type = "text", ...props }) => {
   const handleNumber = (values, source) => {
     const { event } = source;
-    props.onChange(event);
+    event && props.onChange(event);
   };
 
   const getInput = () => {

@@ -1,6 +1,7 @@
 import {
   CLEAR_CURRENT_BUSINESS_PERSON,
   DELETE_BUSINESS_PERSON,
+  EDIT_BUSINESS_PERSON,
   SET_BUSINESS_TEAM,
   SET_CURRENT_BUSINNES_PERSON,
 } from "redux/types/businessPerson.types";
@@ -19,6 +20,11 @@ export const clearCurrentBusinessPerson = () => ({
 export const setBusinessTeam = (businessTeam) => ({
   type: SET_BUSINESS_TEAM,
   payload: businessTeam,
+});
+
+export const editBusinessPerson = (businessPerson) => ({
+  type: EDIT_BUSINESS_PERSON,
+  payload: businessPerson,
 });
 
 export const deleteBusinessPerson = (businessPersonId) => ({
@@ -45,6 +51,18 @@ export const addNewPerson = (businessId, businessPerson) => {
         businessPerson
       );
       await getBusinessTeam(businessId)(dispatch);
+    } catch (error) {}
+  };
+};
+
+export const editCurrentBusinessPerson = (businessId, businessPerson) => {
+  return async (dispatch) => {
+    try {
+      const data = await BusinessPersonService.editBusinessPerson(
+        businessId,
+        businessPerson
+      );
+      dispatch(editBusinessPerson(data));
     } catch (error) {}
   };
 };
