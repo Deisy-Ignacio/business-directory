@@ -10,6 +10,7 @@ export const Button = styled.button`
   ${({ fullWidth }) => (fullWidth ? "width:100%" : "")}
   background: ${({ variant }) => VARIANTS[variant].background};
   color: ${({ variant }) => VARIANTS[variant].color};
+  opacity: ${({ disabled }) => disabled && "0.7"};
 
   height: 4.8rem;
   border-radius: 10rem;

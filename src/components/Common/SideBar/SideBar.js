@@ -1,11 +1,11 @@
 import * as S from "./SideBar.styled";
 import tribalLogo from "assets/tribal_logo.png";
 import { ReactComponent as Arrow } from "assets/svgs/arrow-down.svg";
-import { menu } from "utils/data/menu";
+import { MENU } from "utils/data";
 
 const FOOTER = ["Legal", "FAQ", "Support"];
 
-export const SideBar = ({ name }) => {
+const SideBar = ({ name }) => {
   return (
     <S.Container>
       <S.Header>
@@ -14,7 +14,7 @@ export const SideBar = ({ name }) => {
         <Arrow />
       </S.Header>
       <S.MenuList>
-        {menu.map((item, index) => (
+        {MENU.map((item, index) => (
           <S.MenuItem key={`menu-item_${index}`}>
             {item.icon}
             <S.MenuName>{item.title}</S.MenuName>
@@ -29,3 +29,5 @@ export const SideBar = ({ name }) => {
     </S.Container>
   );
 };
+
+export default SideBar;

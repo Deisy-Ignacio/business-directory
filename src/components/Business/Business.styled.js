@@ -8,7 +8,17 @@ export const Wrapper = styled.div`
   justify-content: space-between;
 `;
 
-export const Actions = styled.div``;
+export const Actions = styled.div`
+  display: flex;
+  align-items: center;
+  & > svg {
+    margin-right: 2.7rem;
+    cursor: pointer;
+    path {
+      stroke: #000;
+    }
+  }
+`;
 
 export const Icons = styled.div`
   & svg {
@@ -29,5 +39,6 @@ export const BusinessItem = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 2.6rem 0;
-  border-bottom: 1px solid #efeeee; ;
+  border-bottom: 1px solid #efeeee;
+  cursor: pointer;
 `;

@@ -18,6 +18,6 @@ export const editBusiness = async ({ businessId, name }) => {
 };
 
 export const deleteBusiness = async (businessId) => {
-  const { data } = axios.delete(`${businessUrl}/${businessId}`);
+  const { data } = await axios.delete(`${businessUrl}/${businessId}`);
   return data;
 };

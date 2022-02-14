@@ -1,6 +1,6 @@
 import * as S from "./Modal.styled";
 
-export const Modal = ({ open, close, title, children }) => {
+const Modal = ({ open, close, title, children }) => {
   return (
     <>
       {open && (
@@ -16,3 +16,5 @@ export const Modal = ({ open, close, title, children }) => {
     </>
   );
 };
+
+export default Modal;

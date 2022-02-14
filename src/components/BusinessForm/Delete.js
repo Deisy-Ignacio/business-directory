@@ -1,30 +1,26 @@
-import { Button } from "components/Common/Button/Button";
-import { Label } from "components/Common/Label/Label";
+import Button from "components/Common/Button/Button";
+import Label from "components/Common/Label/Label";
 import { useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { deleteCurrentBusiness } from "redux/actions/business.actions";
 import * as S from "./BusinessForm.styled";
 
-const Delete = ({ cancel }) => {
-  const dispatch = useDispatch();
-  const { currentBusiness } = useSelector((state) => state.business);
-
-  const handleDelete = useCallback(() => {
-    currentBusiness &&
-      dispatch(deleteCurrentBusiness(currentBusiness.businessId));
-    cancel();
-  }, [dispatch, currentBusiness, cancel]);
+const Delete = ({ id, name, handleDelete, cancel }) => {
+  const handleDeleteItem = useCallback(
+    (id) => () => {
+      handleDelete(id);
+    },
+    [handleDelete]
+  );
 
   return (
     <>
       <Label type={"subtitle"} textAlign={"center"}>
-        Are you sure to delete {currentBusiness?.name}?
+        Are you sure to delete {name}?
       </Label>
       <S.ContainerButtons>
         <Button variant="secondary" onClick={cancel}>
           Cancel
         </Button>
-        <Button variant="error" onClick={handleDelete}>
+        <Button variant="error" onClick={handleDeleteItem(id)}>
           Remove
         </Button>
       </S.ContainerButtons>

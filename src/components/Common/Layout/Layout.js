@@ -1,8 +1,8 @@
 import React from "react";
-import { SideBar } from "../SideBar/SideBar";
+import SideBar from "../SideBar/SideBar";
 import * as S from "./Layout.styled";
 
-export const Layout = ({ children }) => {
+const Layout = ({ children }) => {
   return (
     <S.LayoutContainer>
       <SideBar />
@@ -10,3 +10,5 @@ export const Layout = ({ children }) => {
     </S.LayoutContainer>
   );
 };
+
+export default Layout;

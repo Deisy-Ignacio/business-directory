@@ -5,20 +5,30 @@ import {
   SET_TYPE_MODAL,
   SET_CURRENT_ID,
   CLEAR_CURRENT_ID,
+  SET_OPEN_MODAL,
+  SET_ERROR,
+  SET_BUSINESS_VIEW,
 } from "../types/business.types";
 
 const initialState = {
   business: [],
   typeModal: "",
   currentBusiness: null,
+  openModal: false,
+  businessView: "BUSINESS",
+  error: "",
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_BUSINESS:
-      return { ...state, business: action.payload };
+      return { ...state, business: action.payload, openModal: false };
     case SET_TYPE_MODAL:
       return { ...state, typeModal: action.payload };
+    case SET_OPEN_MODAL:
+      return { ...state, openModal: action.payload };
+    case SET_BUSINESS_VIEW:
+      return { ...state, businessView: action.payload };
     case SET_CURRENT_ID: {
       const currentBusiness = state.business.find(
         ({ businessId }) => businessId === action.payload
@@ -32,7 +42,7 @@ const reducer = (state = initialState, action) => {
           ? editingBusiness
           : business
       );
-      return { ...state, business, currentBusiness: null };
+      return { ...state, business, currentBusiness: null, openModal: false };
     }
     case CLEAR_CURRENT_ID:
       return { ...state, currentBusiness: null };
@@ -41,8 +51,10 @@ const reducer = (state = initialState, action) => {
       const business = state.business.filter(
         ({ businessId }) => businessId !== action.payload
       );
-      return { ...state, business, currentBusiness: null };
+      return { ...state, business, currentBusiness: null, openModal: false };
     }
+    case SET_ERROR:
+      return { ...state, error: action.payload };
     default:
       return state;
   }

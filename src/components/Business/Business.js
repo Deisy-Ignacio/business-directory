@@ -1,51 +1,76 @@
-import { useCallback, useEffect, useState } from "react";
-import { Label } from "components/Common/Label/Label";
-import { Button } from "components/Common/Button/Button";
-import { Title } from "components/Common/Title/Title";
-import * as S from "./Business.styled";
-import { ReactComponent as Overview } from "assets/svgs/overview.svg";
-import { ReactComponent as EditIcon } from "assets/svgs/edit.svg";
-import { ReactComponent as DeleteIcon } from "assets/svgs/delete.svg";
-import { Modal } from "components/Common/Modal/Modal";
+import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Label from "components/Common/Label/Label";
+import Button from "components/Common/Button/Button";
+import Title from "components/Common/Title/Title";
+import Modal from "components/Common/Modal/Modal";
+import CreateEdit from "components/BusinessForm/CreateEdit";
+import Delete from "components/BusinessForm/Delete";
 import {
   clearCurrentId,
+  deleteCurrentBusiness,
   getBusiness,
+  setBusinessView,
   setCurrentId,
+  setOpenModal,
   setTypeModal,
 } from "../../redux/actions/business.actions";
-import { Create } from "components/BusinessForm/Create";
-import Delete from "components/BusinessForm/Delete";
-
-const MODAL_TYPES = { CREATE: "CREATE", EDIT: "EDIT", DELETE: "DELETE" };
+import { MODAL_TYPES, BUSINESS_VIEWS } from "utils/data";
+import { ReactComponent as EditIcon } from "assets/svgs/edit.svg";
+import { ReactComponent as DeleteIcon } from "assets/svgs/delete.svg";
+import * as S from "./Business.styled";
 
 const Business = () => {
-  const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
-  const { business, typeModal } = useSelector((state) => state.business);
+  const { business, typeModal, openModal, currentBusiness } = useSelector(
+    (state) => state.business
+  );
 
   const handleModal = useCallback(
-    (type, id) => () => {
+    (type, id) => (e) => {
+      e.stopPropagation();
       //dispatch to set action
       id && dispatch(setCurrentId(id));
       dispatch(setTypeModal(type));
-      setOpen(true);
+      dispatch(setOpenModal(true));
     },
     [dispatch]
   );
 
   const handleCloseModal = useCallback(() => {
-    setOpen(false);
+    dispatch(setOpenModal(false));
     dispatch(clearCurrentId());
   }, [dispatch]);
+
+  const handleBusinessGroup = useCallback(
+    (view, id) => () => {
+      dispatch(setBusinessView(view));
+      dispatch(setCurrentId(id));
+    },
+    [dispatch]
+  );
+
+  const handleDelete = useCallback(
+    (id) => {
+      dispatch(deleteCurrentBusiness(id));
+    },
+    [dispatch]
+  );
 
   const contentModal = () => {
     switch (typeModal) {
       case MODAL_TYPES.CREATE:
       case MODAL_TYPES.EDIT:
-        return <Create cancel={handleCloseModal} />;
+        return <CreateEdit cancel={handleCloseModal} />;
       case MODAL_TYPES.DELETE:
-        return <Delete cancel={handleCloseModal} />;
+        return (
+          <Delete
+            name={currentBusiness.name}
+            id={currentBusiness.businessId}
+            handleDelete={handleDelete}
+            cancel={handleCloseModal}
+          />
+        );
 
       default:
         return null;
@@ -59,7 +84,7 @@ const Business = () => {
   return (
     <S.Container>
       <S.Wrapper>
-        <Label type={"title"}>Business Name</Label>
+        <Label type={"title"}>Business</Label>
         <S.Actions>
           <Button size={"medium"} onClick={handleModal(MODAL_TYPES.CREATE)}>
             Create Business
@@ -68,7 +93,13 @@ const Business = () => {
       </S.Wrapper>
       <S.Content>
         {business.map((item) => (
-          <S.BusinessItem key={item.businessId}>
+          <S.BusinessItem
+            key={item.businessId}
+            onClick={handleBusinessGroup(
+              BUSINESS_VIEWS.BUSINNES_TEAM,
+              item.businessId
+            )}
+          >
             <Title>{item.name}</Title>
             <S.Icons>
               <EditIcon
@@ -81,8 +112,8 @@ const Business = () => {
           </S.BusinessItem>
         ))}
       </S.Content>
-      {open && (
-        <Modal open={open} close={handleCloseModal}>
+      {openModal && (
+        <Modal open={openModal} close={handleCloseModal}>
           {contentModal()}
         </Modal>
       )}

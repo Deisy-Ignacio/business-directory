@@ -3,12 +3,16 @@ import Theme from "providers/Theme/Theme";
 import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import store from "./redux/store";
+import { Provider } from "react-redux";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Theme>
-      <App />
-    </Theme>
+    <Provider store={store}>
+      <Theme>
+        <App />
+      </Theme>
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );

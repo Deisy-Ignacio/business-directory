@@ -1,15 +1,19 @@
 import Business from "components/Business/Business";
-import { Layout } from "components/Common/Layout/Layout";
-import { Provider } from "react-redux";
-import store from "./redux/store";
+import BusinessTeam from "components/Business/BusinessTeam";
+import Layout from "components/Common/Layout/Layout";
+import { useSelector } from "react-redux";
+import { BUSINESS_VIEWS } from "utils/data";
 
 function App() {
+  const { businessView } = useSelector((state) => state.business);
   return (
-    <Provider store={store}>
-      <Layout>
+    <Layout>
+      {businessView === BUSINESS_VIEWS.BUSINNES ? (
         <Business />
-      </Layout>
-    </Provider>
+      ) : (
+        <BusinessTeam />
+      )}
+    </Layout>
   );
 }
 

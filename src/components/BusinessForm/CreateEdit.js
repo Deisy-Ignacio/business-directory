@@ -1,6 +1,6 @@
-import { Button } from "components/Common/Button/Button";
-import { Input } from "components/Common/Input/Input";
-import { Label } from "components/Common/Label/Label";
+import Button from "components/Common/Button/Button";
+import Input from "components/Common/Input/Input";
+import Label from "components/Common/Label/Label";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -10,19 +10,17 @@ import {
 } from "../../redux/actions/business.actions";
 import * as S from "./BusinessForm.styled";
 
-export const Create = ({ cancel }) => {
+const CreateEdit = ({ cancel }) => {
   const [name, setName] = useState("");
   const dispatch = useDispatch();
   const { currentBusiness } = useSelector((state) => state.business);
 
   const editBusiness = () => {
     dispatch(editCurrentBusiness({ ...currentBusiness, name }));
-    cancel();
   };
 
   const createBusiness = () => {
     dispatch(addNewBusiness({ name }));
-    cancel();
   };
 
   const onChangeInput = ({ target }) => {
@@ -36,7 +34,7 @@ export const Create = ({ cancel }) => {
   return (
     <>
       <Label type={"subtitle"} textAlign={"center"}>
-        Create Business
+        {currentBusiness ? "Edit Business" : "Create Business"}
       </Label>
       <Input title={"Business Name"} value={name} onChange={onChangeInput} />
       <S.ContainerButtons>
@@ -53,3 +51,5 @@ export const Create = ({ cancel }) => {
     </>
   );
 };
+
+export default CreateEdit;

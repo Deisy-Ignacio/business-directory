@@ -6,6 +6,9 @@ import {
   SET_TYPE_MODAL,
   SET_CURRENT_ID,
   CLEAR_CURRENT_ID,
+  SET_OPEN_MODAL,
+  SET_BUSINESS_VIEW,
+  SET_ERROR,
 } from "../types/business.types";
 import * as BusinessService from "services/business.service";
 
@@ -30,9 +33,19 @@ export const deleteBusiness = (businessId) => ({
   payload: businessId,
 });
 
+export const setBusinessView = (view) => ({
+  type: SET_BUSINESS_VIEW,
+  payload: view,
+});
+
 export const setTypeModal = (type) => ({
   type: SET_TYPE_MODAL,
   payload: type,
+});
+
+export const setOpenModal = (open) => ({
+  type: SET_OPEN_MODAL,
+  payload: open,
 });
 
 export const setCurrentId = (id) => ({
@@ -42,6 +55,11 @@ export const setCurrentId = (id) => ({
 
 export const clearCurrentId = () => ({
   type: CLEAR_CURRENT_ID,
+});
+
+export const setError = (error) => ({
+  type: SET_ERROR,
+  payload: error,
 });
 
 //
