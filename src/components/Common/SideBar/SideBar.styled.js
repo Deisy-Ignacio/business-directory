@@ -1,3 +1,4 @@
+import { down } from "styled-breakpoints";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -5,6 +6,16 @@ export const Container = styled.div`
   height: 100vh;
   padding: 7.8rem 1.6rem 3.5rem 4rem;
   position: relative;
+  background: #fff;
+  ${down("md")} {
+    display: ${({ showMenu }) => (showMenu ? "inline-block;" : "none;")};
+    position: fixed;
+    z-index: 200;
+    top: 0;
+    min-width: 100%;
+    height: 100%;
+    padding: 3rem 2.5rem;
+  }
 `;
 
 export const Header = styled.div`
@@ -40,6 +51,7 @@ export const MenuList = styled.div`
 export const MenuItem = styled.div`
   display: flex;
   align-items: center;
+  cursor: pointer;
   &:not(:last-child) {
     margin-bottom: 3.4rem;
   }

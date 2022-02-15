@@ -11,7 +11,7 @@ import {
 } from "../../redux/actions/business.actions";
 import * as S from "./BusinessForm.styled";
 
-const CreateEdit = ({ cancel }) => {
+const CreateEdit = ({ cancel, fullWidth }) => {
   const [name, setName] = useState("");
   const dispatch = useDispatch();
   const { currentBusiness } = useSelector((state) => state.business);
@@ -41,10 +41,11 @@ const CreateEdit = ({ cancel }) => {
       </Label>
       <Input title={"Business Name"} value={name} onChange={onChangeInput} />
       <S.ContainerButtons>
-        <Button variant="secondary" onClick={cancel}>
+        <Button fullWidth={fullWidth} variant="secondary" onClick={cancel}>
           Cancel
         </Button>
         <Button
+          fullWidth={fullWidth}
           onClick={currentBusiness ? editBusiness : createBusiness}
           disabled={name.length === 0}
         >

@@ -11,7 +11,7 @@ import {
 } from "redux/actions/businessPerson.actions";
 import { setOpenModal } from "redux/actions/modal/modal.actions";
 
-export const CreateEditTeam = ({ businessId, cancel }) => {
+export const CreateEditTeam = ({ businessId, cancel, fullWidth }) => {
   const dispatch = useDispatch();
   const { currentBusinessPerson } = useSelector(
     (state) => state.businessPerson
@@ -116,10 +116,11 @@ export const CreateEditTeam = ({ businessId, cancel }) => {
         />
       ))}
       <S.ContainerButtons>
-        <Button variant="secondary" onClick={cancel}>
+        <Button fullWidth={fullWidth} variant="secondary" onClick={cancel}>
           Cancel
         </Button>
         <Button
+          fullWidth={fullWidth}
           onClick={currentBusinessPerson ? editPerson : createPerson}
           disabled={!isValid()}
         >

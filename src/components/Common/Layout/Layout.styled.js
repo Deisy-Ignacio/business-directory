@@ -7,6 +7,9 @@ export const LayoutContainer = styled.div`
 
 export const Content = styled.div`
   width: 100%;
-  margin-top: 15rem;
-  padding: 0 4.5rem 0 3.5rem;
+  height: 100%;
+  max-width: 1440px;
+  margin: auto;
+  //padding: 15rem 4.5rem 0 3.5rem;
+  padding: 1rem;
 `;

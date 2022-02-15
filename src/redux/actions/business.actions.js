@@ -5,7 +5,6 @@ import {
   DELETE_BUSINESS,
   SET_CURRENT_ID,
   CLEAR_CURRENT_ID,
-  SET_BUSINESS_VIEW,
   SET_ERROR,
 } from "../types/business.types";
 import * as BusinessService from "services/business.service";
@@ -29,11 +28,6 @@ export const editBusiness = (business) => ({
 export const deleteBusiness = (businessId) => ({
   type: DELETE_BUSINESS,
   payload: businessId,
-});
-
-export const setBusinessView = (view) => ({
-  type: SET_BUSINESS_VIEW,
-  payload: view,
 });
 
 export const setCurrentId = (id) => ({

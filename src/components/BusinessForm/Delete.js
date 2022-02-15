@@ -3,7 +3,7 @@ import Label from "components/Common/Label/Label";
 import { useCallback } from "react";
 import * as S from "./BusinessForm.styled";
 
-const Delete = ({ id, name, handleDelete, cancel }) => {
+const Delete = ({ id, name, handleDelete, cancel, fullWidth }) => {
   const handleDeleteItem = useCallback(
     (id) => () => {
       handleDelete(id);
@@ -17,10 +17,14 @@ const Delete = ({ id, name, handleDelete, cancel }) => {
         Are you sure to delete {name}?
       </Label>
       <S.ContainerButtons>
-        <Button variant="secondary" onClick={cancel}>
+        <Button variant="secondary" onClick={cancel} fullWidth={fullWidth}>
           Cancel
         </Button>
-        <Button variant="error" onClick={handleDeleteItem(id)}>
+        <Button
+          variant="error"
+          onClick={handleDeleteItem(id)}
+          fullWidth={fullWidth}
+        >
           Remove
         </Button>
       </S.ContainerButtons>

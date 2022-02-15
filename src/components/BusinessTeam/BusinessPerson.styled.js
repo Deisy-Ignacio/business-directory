@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const ContainerCard = styled.div`
+  max-width: 35rem;
   border: 1px solid #c8c8cc;
   box-sizing: border-box;
   border-radius: 12px;

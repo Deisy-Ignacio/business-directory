@@ -1,3 +1,4 @@
+import { down } from "styled-breakpoints";
 import styled from "styled-components";
 
 export const ContainerButtons = styled.div`
@@ -8,5 +9,16 @@ export const ContainerButtons = styled.div`
 
   & > :first-child {
     margin-right: 1.6rem;
+  }
+
+  ${down("md")} {
+    flex-direction: column;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    & > :first-child {
+      margin-right: 0;
+      margin-bottom: 1.6rem;
+    }
   }
 `;

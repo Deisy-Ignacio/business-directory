@@ -4,6 +4,7 @@ import {
   CLEAR_CURRENT_BUSINESS_PERSON,
   DELETE_BUSINESS_PERSON,
   EDIT_BUSINESS_PERSON,
+  RESET_BUSINESS_PERSON,
 } from "../types/businessPerson.types";
 
 const initialState = {
@@ -40,6 +41,9 @@ const reducer = (state = initialState, action) => {
       );
       return { ...state, businessTeam, currentBusinessPerson: null };
     }
+
+    case RESET_BUSINESS_PERSON:
+      return initialState;
 
     default:
       return state;

@@ -1,8 +1,15 @@
+import { down } from "styled-breakpoints";
 import styled, { css } from "styled-components";
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  padding: 15rem 4.5rem 0 3.5rem;
+  ${down("md")} {
+    padding: 4.8rem 2.4rem 3.9rem;
+  }
+`;
 
 export const Wrapper = styled.div`
+  margin-top: 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -32,7 +39,8 @@ export const Icons = styled.div`
 `;
 
 export const Content = styled.div`
-  margin: 1.6rem 0;
+  margin-top: 1.6rem;
+  margin-bottom: 2.6rem;
 
   ${({ overview }) =>
     overview &&
@@ -52,4 +60,6 @@ export const BusinessItem = styled.div`
   cursor: pointer;
 `;
 
-export const IconView = styled.div``;
+export const IconView = styled.div`
+  cursor: pointer;
+`;

@@ -7,7 +7,7 @@ const VARIANTS = {
 };
 
 export const Button = styled.button`
-  ${({ fullWidth }) => (fullWidth ? "width:100%" : "")}
+  ${({ fullWidth }) => (fullWidth ? "width:100%;" : "")}
   background: ${({ variant }) => VARIANTS[variant].background};
   color: ${({ variant }) => VARIANTS[variant].color};
   opacity: ${({ disabled }) => disabled && "0.7"};

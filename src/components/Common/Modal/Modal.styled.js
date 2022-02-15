@@ -1,3 +1,4 @@
+import { down } from "styled-breakpoints";
 import styled from "styled-components";
 
 export const ModalBolck = styled.div`
@@ -40,6 +41,12 @@ export const ModalContainer = styled.div`
   z-index: 1;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   border-radius: 29px;
+  ${down("md")} {
+    max-height: max-content;
+    min-width: 100%;
+    height: 100vh;
+    border-radius: 0;
+  }
 `;
 
 export const ModalTitle = styled.div``;
@@ -55,3 +62,8 @@ export const Title = styled.h1`
 `;
 
 export const ModalFooter = styled.div``;
+
+export const ModalWrapper = styled.div`
+  position: relative;
+  height: 100%;
+`;

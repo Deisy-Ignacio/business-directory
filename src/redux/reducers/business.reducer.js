@@ -11,7 +11,6 @@ import {
 const initialState = {
   business: [],
   currentBusiness: null,
-  businessView: "BUSINESS",
   error: "",
 };
 

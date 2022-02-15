@@ -10,19 +10,22 @@ import {
   clearCurrentId,
   deleteCurrentBusiness,
   getBusiness,
-  setBusinessView,
   setCurrentId,
 } from "../../redux/actions/business.actions";
-import { MODAL_TYPES, BUSINESS_VIEWS } from "utils/data";
+import { MODAL_TYPES, VIEWS } from "utils/data";
 import { ReactComponent as EditIcon } from "assets/svgs/edit.svg";
 import { ReactComponent as DeleteIcon } from "assets/svgs/delete.svg";
 import * as S from "./Business.styled";
 import { setOpenModal, setTypeModal } from "redux/actions/modal/modal.actions";
+import { setMainView } from "redux/actions/views/views.actions";
+import { useBreakpoint } from "styled-breakpoints/react-styled";
+import { down } from "styled-breakpoints";
 
 const Business = () => {
   const dispatch = useDispatch();
   const { business, currentBusiness } = useSelector((state) => state.business);
   const { typeModal, openModal } = useSelector((state) => state.modal);
+  const smallDevice = useBreakpoint(down("md"));
 
   const handleModal = useCallback(
     (type, id) => (e) => {
@@ -42,7 +45,7 @@ const Business = () => {
 
   const handleBusinessGroup = useCallback(
     (view, id) => () => {
-      dispatch(setBusinessView(view));
+      dispatch(setMainView(view));
       dispatch(setCurrentId(id));
     },
     [dispatch]
@@ -60,7 +63,7 @@ const Business = () => {
     switch (typeModal) {
       case MODAL_TYPES.CREATE:
       case MODAL_TYPES.EDIT:
-        return <CreateEdit cancel={handleCloseModal} />;
+        return <CreateEdit cancel={handleCloseModal} fullWidth={smallDevice} />;
       case MODAL_TYPES.DELETE:
         return (
           <Delete
@@ -68,6 +71,7 @@ const Business = () => {
             id={currentBusiness.businessId}
             handleDelete={handleDelete}
             cancel={handleCloseModal}
+            fullWidth={smallDevice}
           />
         );
 
@@ -84,20 +88,19 @@ const Business = () => {
     <S.Container>
       <S.Wrapper>
         <Label type={"title"}>Business</Label>
-        <S.Actions>
-          <Button size={"medium"} onClick={handleModal(MODAL_TYPES.CREATE)}>
-            Create Business
-          </Button>
-        </S.Actions>
+        {!smallDevice && (
+          <S.Actions>
+            <Button onClick={handleModal(MODAL_TYPES.CREATE)}>
+              Create Business
+            </Button>
+          </S.Actions>
+        )}
       </S.Wrapper>
       <S.Content>
         {business.map((item) => (
           <S.BusinessItem
             key={item.businessId}
-            onClick={handleBusinessGroup(
-              BUSINESS_VIEWS.BUSINNES_TEAM,
-              item.businessId
-            )}
+            onClick={handleBusinessGroup(VIEWS.BUSINNES_TEAM, item.businessId)}
           >
             <Title>{item.name}</Title>
             <S.Icons>
@@ -111,6 +114,13 @@ const Business = () => {
           </S.BusinessItem>
         ))}
       </S.Content>
+      {smallDevice && (
+        <S.Actions>
+          <Button fullWidth={true} onClick={handleModal(MODAL_TYPES.CREATE)}>
+            Add Business
+          </Button>
+        </S.Actions>
+      )}
       {openModal && (
         <Modal open={openModal} close={handleCloseModal}>
           {contentModal()}

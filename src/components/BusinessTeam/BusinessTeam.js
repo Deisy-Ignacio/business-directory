@@ -6,21 +6,27 @@ import {
   clearCurrentBusinessPerson,
   deleteCurrentBusinessPerson,
   getBusinessTeam,
+  resetStateBusinessPerson,
   setCurrentBusinessPerson,
 } from "../../redux/actions/businessPerson.actions";
 import * as S from "../Business/Business.styled";
+import { useBreakpoint } from "styled-breakpoints/react-styled";
+import { down } from "styled-breakpoints";
 import { ReactComponent as OverviewIcon } from "assets/svgs/overview.svg";
 import { ReactComponent as ListIcon } from "assets/svgs/list.svg";
+import { ReactComponent as ArrowIcon } from "assets/svgs/arrow-left.svg";
+
 import Modal from "components/Common/Modal/Modal";
-import { MODAL_TYPES } from "utils/data";
+import { MODAL_TYPES, VIEWS } from "utils/data";
 import { CreateEditTeam } from "components/BusinessTeamForm/CreateEditTeam";
 import Delete from "components/BusinessForm/Delete";
 import { setOpenModal, setTypeModal } from "redux/actions/modal/modal.actions";
-import { setOverview } from "redux/actions/views/views.actions";
+import { setMainView, setOverview } from "redux/actions/views/views.actions";
 import BusinessItemPerson from "./BusinessItemPerson";
 import BusinessCardPerson from "./BusinessCardPerson";
 
 export default function BusinessTeam() {
+  const smallDevice = useBreakpoint(down("md"));
   const dispatch = useDispatch();
   const { currentBusiness } = useSelector((state) => state.business);
   const { businessTeam, currentBusinessPerson } = useSelector(
@@ -60,6 +66,7 @@ export default function BusinessTeam() {
           <CreateEditTeam
             businessId={currentBusiness.businessId}
             cancel={handleCloseModal}
+            fullWidth={smallDevice}
           />
         );
       case MODAL_TYPES.DELETE:
@@ -69,6 +76,7 @@ export default function BusinessTeam() {
             id={currentBusinessPerson.personId}
             handleDelete={handleDelete}
             cancel={handleCloseModal}
+            fullWidth={smallDevice}
           />
         );
 
@@ -81,19 +89,29 @@ export default function BusinessTeam() {
     dispatch(setOverview(!overview));
   };
 
+  const onChangeMainView = (view) => () => {
+    dispatch(setMainView(view));
+    dispatch(resetStateBusinessPerson());
+  };
+
   useEffect(() => {
     dispatch(getBusinessTeam(currentBusiness.businessId));
   }, [dispatch, currentBusiness]);
 
   return (
     <S.Container>
+      <S.IconView onClick={onChangeMainView(VIEWS.BUSINNES)}>
+        <ArrowIcon />
+      </S.IconView>
       <S.Wrapper>
         <Label type={"title"}>Business Name</Label>
         <S.Actions>
           <S.IconView onClick={onChangeView}>{ICON_VIEW}</S.IconView>
-          <Button size={"medium"} onClick={handleModal(MODAL_TYPES.CREATE)}>
-            Create Person
-          </Button>
+          {!smallDevice && (
+            <Button onClick={handleModal(MODAL_TYPES.CREATE)}>
+              Create Person
+            </Button>
+          )}
         </S.Actions>
       </S.Wrapper>
       <S.Content overview={overview}>
@@ -119,6 +137,11 @@ export default function BusinessTeam() {
           )
         )}
       </S.Content>
+      {smallDevice && (
+        <Button fullWidth={true} onClick={handleModal(MODAL_TYPES.CREATE)}>
+          Add Person
+        </Button>
+      )}
       {openModal && (
         <Modal open={openModal} close={handleCloseModal}>
           {contentModal()}

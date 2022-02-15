@@ -2,6 +2,7 @@ import {
   CLEAR_CURRENT_BUSINESS_PERSON,
   DELETE_BUSINESS_PERSON,
   EDIT_BUSINESS_PERSON,
+  RESET_BUSINESS_PERSON,
   SET_BUSINESS_TEAM,
   SET_CURRENT_BUSINNES_PERSON,
 } from "redux/types/businessPerson.types";
@@ -30,6 +31,10 @@ export const editBusinessPerson = (businessPerson) => ({
 export const deleteBusinessPerson = (businessPersonId) => ({
   type: DELETE_BUSINESS_PERSON,
   payload: businessPersonId,
+});
+
+export const resetStateBusinessPerson = () => ({
+  type: RESET_BUSINESS_PERSON,
 });
 
 export const getBusinessTeam = (id) => {
