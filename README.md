@@ -2,6 +2,8 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Developed by Luz Deisy Ignacio Luis
+
 ## NOTES
 
 ## THE PERSON PUT METHOD ONLY ALLOWS EDITING A SINGLE PARAMETER (NAME)
