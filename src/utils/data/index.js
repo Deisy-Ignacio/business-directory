@@ -20,10 +20,10 @@ export const VIEWS = {
 };
 
 export const MENU = [
-  { title: "Overview", icon: <Overview />, view: VIEWS.BUSINNES },
-  { title: "Tribal Pay", icon: <Bank /> },
-  { title: "Tribal Credit", icon: <CreditCard /> },
-  { title: "Payments", icon: <DollarSign /> },
-  { title: "Notifications", icon: <Notification /> },
-  { title: "Users", icon: <User /> },
+  { title: "overview", icon: <Overview />, view: VIEWS.BUSINNES },
+  { title: "tribalpay", icon: <Bank /> },
+  { title: "tribalCredit", icon: <CreditCard /> },
+  { title: "payments", icon: <DollarSign /> },
+  { title: "notifications", icon: <Notification /> },
+  { title: "users", icon: <User /> },
 ];

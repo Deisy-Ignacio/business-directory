@@ -24,6 +24,7 @@ import { setOpenModal, setTypeModal } from "redux/actions/modal/modal.actions";
 import { setMainView, setOverview } from "redux/actions/views/views.actions";
 import BusinessItemPerson from "./BusinessItemPerson";
 import BusinessCardPerson from "./BusinessCardPerson";
+import { useTranslation } from "react-i18next";
 
 export default function BusinessTeam() {
   const smallDevice = useBreakpoint(down("md"));
@@ -32,10 +33,19 @@ export default function BusinessTeam() {
   const { businessTeam, currentBusinessPerson } = useSelector(
     (state) => state.businessPerson
   );
+  const { t } = useTranslation("translation", { keyPrefix: "businessPerson" });
+
   const { typeModal, openModal } = useSelector((state) => state.modal);
   const { overview } = useSelector((state) => state.views);
   const ICON_VIEW = overview ? <ListIcon /> : <OverviewIcon />;
 
+  /**
+   * This is a closure to define typeModal, currentBusiness and open the modal
+   *
+   * @param {string} type define type modal
+   * @param {string} id set current business person by id
+   * @returns {Function}
+   */
   const handleModal = useCallback(
     (type, id) => () => {
       id && dispatch(setCurrentBusinessPerson(id));
@@ -45,11 +55,22 @@ export default function BusinessTeam() {
     [dispatch]
   );
 
+  /**
+   * This is a function to close the modal and clear the currentBusinessPerson
+   *
+   * @returns {void}
+   */
   const handleCloseModal = useCallback(() => {
     dispatch(setOpenModal(false));
     dispatch(clearCurrentBusinessPerson());
   }, [dispatch]);
 
+  /**
+   * This is a function to delete currentBusinessPerson and close the modal.
+   *
+   * @param {string} id set current business person by id
+   * @returns {void}
+   */
   const handleDelete = useCallback(
     (id) => {
       dispatch(deleteCurrentBusinessPerson(currentBusiness.businessId, id));
@@ -58,6 +79,11 @@ export default function BusinessTeam() {
     [dispatch, currentBusiness]
   );
 
+  /**
+   * This is a function to get the modal content.
+   *
+   * @returns {React.Element | null}
+   */
   const contentModal = () => {
     switch (typeModal) {
       case MODAL_TYPES.CREATE:
@@ -85,10 +111,18 @@ export default function BusinessTeam() {
     }
   };
 
+  /**
+   * This is a function to set the overview
+   * @returns {void}
+   */
   const onChangeView = () => {
     dispatch(setOverview(!overview));
   };
 
+  /**
+   * This is a function to set the main view and reset the business Person
+   * @returns {void}
+   */
   const onChangeMainView = (view) => () => {
     dispatch(setMainView(view));
     dispatch(resetStateBusinessPerson());
@@ -104,12 +138,12 @@ export default function BusinessTeam() {
         <ArrowIcon />
       </S.IconView>
       <S.Wrapper>
-        <Label type={"title"}>Business Name</Label>
+        <Label type={"title"}>{t("title")}</Label>
         <S.Actions>
           <S.IconView onClick={onChangeView}>{ICON_VIEW}</S.IconView>
           {!smallDevice && (
             <Button onClick={handleModal(MODAL_TYPES.CREATE)}>
-              Create Person
+              {t("create")}
             </Button>
           )}
         </S.Actions>
@@ -139,7 +173,7 @@ export default function BusinessTeam() {
       </S.Content>
       {smallDevice && (
         <Button fullWidth={true} onClick={handleModal(MODAL_TYPES.CREATE)}>
-          Add Person
+          {t("createMobile")}
         </Button>
       )}
       {openModal && (

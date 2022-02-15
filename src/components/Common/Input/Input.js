@@ -2,13 +2,22 @@ import NumberFormat from "react-number-format";
 import Label from "../Label/Label";
 import * as S from "./Input.styled";
 import { INPUT_TYPES } from "utils/data";
+import React from "react";
 
 const Input = ({ title, type = "text", ...props }) => {
-  const handleNumber = (values, source) => {
+  /**
+   * This is a function get the phone value
+   * @returns {void}
+   */
+  const handleNumber = (_values, source) => {
     const { event } = source;
     event && props.onChange(event);
   };
 
+  /**
+   * This is a function get the input type
+   * @returns {React.Element }
+   */
   const getInput = () => {
     switch (type) {
       case INPUT_TYPES.TEXT:

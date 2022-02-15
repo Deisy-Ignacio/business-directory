@@ -7,6 +7,10 @@ import * as S from "./Header.styled";
 export default function Header() {
   const dispatch = useDispatch();
 
+  /**
+   * This is a function to show the menu .
+   * @returns {void}
+   */
   const handleMenu = () => {
     dispatch(displayMenu(true));
   };

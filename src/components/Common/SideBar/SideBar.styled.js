@@ -86,3 +86,15 @@ export const Item = styled.h1`
     margin-right: 2.5rem;
   }
 `;
+
+export const Select = styled.select`
+  margin-top: 2.5rem;
+  width: 6rem;
+  height: 5rem;
+  border: none;
+  font-size: 3rem;
+
+  &:focus-visible {
+    outline: none;
+  }
+`;

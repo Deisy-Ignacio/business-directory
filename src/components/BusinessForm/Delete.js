@@ -1,9 +1,19 @@
 import Button from "components/Common/Button/Button";
 import Label from "components/Common/Label/Label";
 import { useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import * as S from "./BusinessForm.styled";
 
 const Delete = ({ id, name, handleDelete, cancel, fullWidth }) => {
+  const { t } = useTranslation("translation", {
+    keyPrefix: "remove",
+  });
+
+  /**
+   * This is a closure to delete a item (business or business person).
+   * @param {string} id set current business or business person by id
+   * @returns {Function}
+   */
   const handleDeleteItem = useCallback(
     (id) => () => {
       handleDelete(id);
@@ -14,18 +24,18 @@ const Delete = ({ id, name, handleDelete, cancel, fullWidth }) => {
   return (
     <>
       <Label type={"subtitle"} textAlign={"center"}>
-        Are you sure to delete {name}?
+        {t("title")} {name}?
       </Label>
       <S.ContainerButtons>
         <Button variant="secondary" onClick={cancel} fullWidth={fullWidth}>
-          Cancel
+          {t("cancel")}
         </Button>
         <Button
           variant="error"
           onClick={handleDeleteItem(id)}
           fullWidth={fullWidth}
         >
-          Remove
+          {t("remove")}
         </Button>
       </S.ContainerButtons>
     </>

@@ -2,6 +2,7 @@ import styled from "styled-components";
 const TYPES = {
   subtitle: { fontSize: "1.8rem", lineHeight: "2.1rem" },
   inputLabel: {
+    fontFamily: "Public Sans",
     fontSize: "1.4rem",
     fontWeight: "600",
     lineHeight: "2rem",
@@ -11,7 +12,8 @@ const TYPES = {
 };
 
 export const Label = styled.h1`
-  font-family: ${({ theme }) => theme.fonts.workSans};
+  font-family: ${({ theme, type }) =>
+    type === "inputLabel" ? TYPES[type].fontFamily : theme.fonts.workSans};
   font-weight: ${({ type }) => TYPES[type].fontWeight | "bold"};
   font-size: ${({ type }) => TYPES[type].fontSize};
   line-height: ${({ type }) => TYPES[type].lineHeight};

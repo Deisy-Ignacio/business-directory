@@ -9,7 +9,6 @@ import {
 } from "../types/business.types";
 import * as BusinessService from "services/business.service";
 
-//
 export const setBusiness = (business) => ({
   type: SET_BUSINESS,
   payload: business,

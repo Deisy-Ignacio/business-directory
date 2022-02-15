@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Label from "components/Common/Label/Label";
 import Button from "components/Common/Button/Button";
@@ -20,13 +20,22 @@ import { setOpenModal, setTypeModal } from "redux/actions/modal/modal.actions";
 import { setMainView } from "redux/actions/views/views.actions";
 import { useBreakpoint } from "styled-breakpoints/react-styled";
 import { down } from "styled-breakpoints";
+import { useTranslation } from "react-i18next";
 
 const Business = () => {
   const dispatch = useDispatch();
   const { business, currentBusiness } = useSelector((state) => state.business);
   const { typeModal, openModal } = useSelector((state) => state.modal);
   const smallDevice = useBreakpoint(down("md"));
+  const { t } = useTranslation("translation", { keyPrefix: "business" });
 
+  /**
+   * This is a closure to define typeModal, currentBusiness.
+   *
+   * @param {string} type define type modal
+   * @param {string} id set current business by id
+   * @returns {Function(e)} returns a function that receives an event
+   */
   const handleModal = useCallback(
     (type, id) => (e) => {
       e.stopPropagation();
@@ -38,11 +47,23 @@ const Business = () => {
     [dispatch]
   );
 
+  /**
+   * This is a function to close the modal and clear the currentBusiness
+   *
+   * @returns {void}
+   */
   const handleCloseModal = useCallback(() => {
     dispatch(setOpenModal(false));
     dispatch(clearCurrentId());
   }, [dispatch]);
 
+  /**
+   * This is a closure to define mainView and currentBusiness.
+   *
+   * @param {string} view define main view
+   * @param {string} id set current business by id
+   * @returns {Function} returns a function
+   */
   const handleBusinessGroup = useCallback(
     (view, id) => () => {
       dispatch(setMainView(view));
@@ -51,6 +72,12 @@ const Business = () => {
     [dispatch]
   );
 
+  /**
+   * This is a function to delete currentBusiness and close the modal.
+   *
+   * @param {string} id set current business by id
+   * @returns {void}
+   */
   const handleDelete = useCallback(
     (id) => {
       dispatch(deleteCurrentBusiness(id));
@@ -59,6 +86,11 @@ const Business = () => {
     [dispatch]
   );
 
+  /**
+   * This is a function to get the modal content.
+   *
+   * @returns {React.Element | null}
+   */
   const contentModal = () => {
     switch (typeModal) {
       case MODAL_TYPES.CREATE:
@@ -87,11 +119,11 @@ const Business = () => {
   return (
     <S.Container>
       <S.Wrapper>
-        <Label type={"title"}>Business</Label>
+        <Label type={"title"}>{t("title")}</Label>
         {!smallDevice && (
           <S.Actions>
             <Button onClick={handleModal(MODAL_TYPES.CREATE)}>
-              Create Business
+              {t("create")}
             </Button>
           </S.Actions>
         )}
@@ -117,7 +149,7 @@ const Business = () => {
       {smallDevice && (
         <S.Actions>
           <Button fullWidth={true} onClick={handleModal(MODAL_TYPES.CREATE)}>
-            Add Business
+            {t("createMobile")}
           </Button>
         </S.Actions>
       )}
