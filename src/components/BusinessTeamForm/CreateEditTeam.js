@@ -9,6 +9,7 @@ import * as S from "../BusinessForm/BusinessForm.styled";
 import {
   addNewPerson,
   editCurrentBusinessPerson,
+  setCurrentBusinessPerson,
 } from "redux/actions/businessPerson.actions";
 import { setOpenModal } from "redux/actions/modal/modal.actions";
 import { useTranslation } from "react-i18next";
@@ -82,7 +83,7 @@ export const CreateEditTeam = ({ businessId, cancel, fullWidth }) => {
   const isValid = () => {
     const newPerson = getClearPerson();
 
-    const areEmpty = !Object.values(newPerson).every(
+    const areEmpty = !Object.values(newPerson)?.every(
       (value) => value.length > 0
     );
     if (areEmpty) return false;
@@ -113,6 +114,7 @@ export const CreateEditTeam = ({ businessId, cancel, fullWidth }) => {
    * @returns {void}
    */
   const editPerson = () => {
+    dispatch(setCurrentBusinessPerson(businessId));
     const newPerson = getClearPerson();
     dispatch(editCurrentBusinessPerson(businessId, newPerson));
     dispatch(setOpenModal(false));

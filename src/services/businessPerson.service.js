@@ -20,7 +20,6 @@ export const editBusinessPerson = async (businessId, businessPerson) => {
     `${businessUrl}/${businessId}/persons/${businessPerson.personId}`,
     businessPerson
   );
-  console.log(data);
   return data;
 };
 
