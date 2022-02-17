@@ -63,11 +63,11 @@ export const addNewPerson = (businessId, businessPerson) => {
 export const editCurrentBusinessPerson = (businessId, businessPerson) => {
   return async (dispatch) => {
     try {
-      const data = await BusinessPersonService.editBusinessPerson(
+      await BusinessPersonService.editBusinessPerson(
         businessId,
         businessPerson
       );
-      dispatch(editBusinessPerson(data));
+      getBusinessTeam(businessId)(dispatch);
     } catch (error) {}
   };
 };

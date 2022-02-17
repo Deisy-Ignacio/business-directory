@@ -84,7 +84,7 @@ export const CreateEditTeam = ({ businessId, cancel, fullWidth }) => {
     const newPerson = getClearPerson();
 
     const areEmpty = !Object.values(newPerson)?.every(
-      (value) => value.length > 0
+      (value = "") => value.length > 0
     );
     if (areEmpty) return false;
 
